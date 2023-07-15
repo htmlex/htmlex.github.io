@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form onsubmit="return Submit(this);">
+        <fieldset>
+            <legend>IP/PORT文字工具</legend>
+            <div style="display: flex;">
+                <label for="ips">IPs:</label>
+                <textarea
+                    style="font-size: 20px;"
+                    name="ips"
+                    cols="40"
+                    rows="20"
+                ></textarea>
+                <label for="ports">PORTs:</label>
+                <textarea
+                    style="font-size: 20px;"
+                    name="ports"
+                    cols="10"
+                    rows="20"
+                ></textarea>
+            </div>
+            <input
+                style="width: 100px;height: 50px;font-size: 20px;"
+                type="submit"
+                value="送出">
+        </fieldset>
+    </form>
+    <hr>
+    結果:
+    <div id="result" style="font-size: 20px;"></div>
+    <script>
+        function Submit(frm) {
+            const ips = frm.ips.value.split('\n');
+            const ports = frm.ports.value.split('\n');
+            
+            const result = document.getElementById('result');
+
+            for (let i = 0; i < ips.length; i++) {
+
+                const http = `http://${ips[i]}:${ports[i]}`;
+                const https = `https://${ips[i]}:${+ports[i]+1}`;
+                
+                result.innerHTML += http + '<br>' + https + '<br>';
+            }
+            
+            return false;
+        };
+    </script>
+</body>
+</html>
