@@ -1,56 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-    <form onsubmit="return Submit(this);">
+    <form id="workForm">
         <fieldset>
             <legend>IP/PORT文字工具</legend>
             <div style="display: flex;">
                 <label for="ips">IPs:</label>
-                <textarea
-                    style="font-size: 20px;"
-                    name="ips"
-                    cols="40"
-                    rows="20"
-                ></textarea>
+                <textarea style="font-size: 20px;" name="ips" cols="40" rows="20"></textarea>
                 <label for="ports">PORTs:</label>
-                <textarea
-                    style="font-size: 20px;"
-                    name="ports"
-                    cols="10"
-                    rows="20"
-                ></textarea>
+                <textarea style="font-size: 20px;" name="ports" cols="10" rows="20"></textarea>
             </div>
-            <input
-                style="width: 100px;height: 50px;font-size: 20px;"
-                type="submit"
-                value="送出">
+            <input style="width: 100px;height: 50px;font-size: 20px;" type="submit" value="送出">
         </fieldset>
     </form>
     <hr>
     結果:
-    <div id="result" style="font-size: 20px;"></div>
-    <script>
-        function Submit(frm) {
-            const ips = frm.ips.value.split('\n');
-            const ports = frm.ports.value.split('\n');
-            
-            const result = document.getElementById('result');
+    <div id="result" style="font-size: 20px;">
+        結果顯示於此....
+    </div>
 
+
+
+
+
+    <script>
+        const workForm = document.getElementById('workForm');
+        const result = document.getElementById('result');
+
+        workForm.onsubmit = function () {
+            console.log('程式開始');
+
+            // 清除之前的內容
+            result.innerHTML = '';
+
+            // 取輸入框的內容, 換行變成陣列內容
+            const ips = workForm.ips.value.split('\n');
+            const ports = workForm.ports.value.split('\n');
+
+            // 迴圈處理 ips 每一行的內容
             for (let i = 0; i < ips.length; i++) {
 
-                const http = `http://${ips[i]}:${ports[i]}`;
-                const https = `https://${ips[i]}:${+ports[i]+1}`;
-                
+                const http = 'http://' + ips[i] + ':' + ports[i];
+                const https = 'https://' + ips[i] + ':' + (+ports[i] + 1);
+
                 result.innerHTML += http + '<br>' + https + '<br>';
             }
-            
             return false;
         };
+
     </script>
 </body>
+
 </html>
